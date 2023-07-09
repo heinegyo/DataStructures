@@ -10,10 +10,17 @@ public class SingleLinkedListDemo {
         HereNode hero4 = new HereNode(4, "林沖", "豹子頭");
 
         SingleLinkedList singleLinkedList = new SingleLinkedList();
-        singleLinkedList.add(hero1);
-        singleLinkedList.add(hero2);
-        singleLinkedList.add(hero3);
-        singleLinkedList.add(hero4);
+        // singleLinkedList.add(hero1);
+        // singleLinkedList.add(hero2);
+        // singleLinkedList.add(hero3);
+        // singleLinkedList.add(hero4);
+
+        singleLinkedList.addByOrder(hero1);
+        singleLinkedList.addByOrder(hero3);
+        singleLinkedList.addByOrder(hero4);
+        singleLinkedList.addByOrder(hero2);
+        singleLinkedList.addByOrder(hero2);
+
         singleLinkedList.list();
     }
 }
@@ -61,6 +68,39 @@ class SingleLinkedList {
             System.out.println(temp);
             //將next後移
             temp = temp.next;
+        }
+    }
+
+    //第二種方式在新增英雄時，根據排名將英雄插入到指定位置
+    //(如果有這個排名，則新增失敗，並給出提示)
+    public void addByOrder(HereNode hereNode){
+        //因為head不能動，因此仍然通過一個輔助指針(變數)來幫助找到新增的位置
+        //因為單鏈表，我們找的temp是位於位置的前一個節點，否則插入
+        HereNode temp = head;
+        //標示新增的編號是否存在，預設為false
+        boolean flag = false;
+        while (true){
+            //說明temp已經在鏈表的最後
+            if (temp.next == null){
+                break;
+            }
+
+            if (temp.next.no > hereNode.no){ //位置找到，就在temp後面insert
+                break;
+            }else if(temp.next.no == hereNode.no){ //說明希望新增的heroNode的編號已經存在
+                flag = true; //說明編號存在
+                break;
+            }
+            temp = temp.next; //後移，相當於走訪鏈表
+        }
+        //判斷flag的值
+        if(flag){ //無法新增，說明編號存在
+            System.out.printf("準備新增的英雄編號 %d 已經存在了，不能加入\n",hereNode.no);
+        }else {
+            //插入到鏈表中,temp後面
+            hereNode.next = temp.next;
+            temp.next = hereNode;
+
         }
     }
 
