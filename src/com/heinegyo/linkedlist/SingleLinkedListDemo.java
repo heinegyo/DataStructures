@@ -31,13 +31,63 @@ public class SingleLinkedListDemo {
         singleLinkedList.del(1);
         singleLinkedList.del(1);
         singleLinkedList.list();
+
+        System.out.println(getLength(singleLinkedList.getHead()));
+
+        HereNode res = findLastIndexNode(singleLinkedList.getHead(),1);
+        System.out.println(res);
+
+
     }
+
+    /**
+     * 查詢singleLinkedList 的倒數第k個節點
+     * 1. 寫一個方法，接收head節點，同時接收一個index
+     * 2. index 表示是倒數第index個節點
+     * 3. 先把singleLinkedList 走訪一次 確認個數
+     * 4. 得到size後，從鏈表的第一個開始走訪(size-index)
+     * @param head
+     * @return
+     */
+    public static HereNode findLastIndexNode(HereNode head,int index) {
+        if (head.next == null){
+            return null;
+        }
+        int size = getLength(head);
+        if(index <= 0 || index > size){
+            return null;
+        }
+        HereNode cur = head.next;
+        for (int i = 0 ; i < size-index ;i++){
+            cur = cur.next;
+        }
+        return cur;
+    }
+
+    public static int getLength(HereNode head){
+        if(head.next == null){
+            return 0;
+        }
+        int length = 0;
+        HereNode cur = head.next;
+        while (cur!=null){
+            length++;
+            cur = cur.next;
+        }
+        return length;
+    }
+
+
 }
 
 //定義SingLinkedList 管理英雄角色
 class SingleLinkedList {
     //先初始化head，head不要動，不存放具體資料
     private HereNode head = new HereNode(0, "", "");
+
+    public HereNode getHead() {
+        return head;
+    }
 
     //新增node到單向鏈錶
     //不考慮編號順序時
