@@ -26,6 +26,11 @@ public class SingleLinkedListDemo {
         HereNode newHeroNode = new HereNode(2, "小盧", "~~");
         singleLinkedList.update(newHeroNode);
         singleLinkedList.list();
+
+        //刪除一個節點
+        singleLinkedList.del(1);
+        singleLinkedList.del(1);
+        singleLinkedList.list();
     }
 }
 
@@ -56,7 +61,6 @@ class SingleLinkedList {
 
     //顯示linkedList
     public void list() {
-        System.out.println("test.....");
         //判斷linkedList是否為空
         if (head.next == null) {
             System.out.println("linkedList is empty!");
@@ -140,7 +144,33 @@ class SingleLinkedList {
         }
     }
 
-
+    /**
+     * 從singleLinkedList中刪除一個節點
+     * 1.先找到需要這個刪除的節點的前一個節點temp
+     * 2.temp.next= temp.next.next
+     * 3.被刪除的節點，不會有其他引用指向，會被GC
+     */
+    public void del(int no) {
+        HereNode temp = head;
+        //標示是否走到待刪除節點
+        boolean flag = false;
+        while (true) {
+            if (temp.next == null) {
+                break;
+            }
+            if (temp.next.no == no) {
+                //找到待刪除節點的前一個節點temp
+                flag = true;
+                break;
+            }
+            temp = temp.next;
+        }
+        if (flag) {
+            temp.next = temp.next.next;
+        } else {
+            System.out.printf("linkedList中沒有該節點 %d ", no);
+        }
+    }
 }
 
 class HereNode {
