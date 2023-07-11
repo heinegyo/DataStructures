@@ -19,23 +19,25 @@ public class SingleLinkedListDemo {
         singleLinkedList.addByOrder(hero3);
         singleLinkedList.addByOrder(hero4);
         singleLinkedList.addByOrder(hero2);
-        singleLinkedList.addByOrder(hero2);
+        //singleLinkedList.addByOrder(hero2);
         singleLinkedList.list();
 
-        //測試修改節點
-        HereNode newHeroNode = new HereNode(2, "小盧", "~~");
-        singleLinkedList.update(newHeroNode);
+        reverse(singleLinkedList.getHead());
         singleLinkedList.list();
+        //測試修改節點
+        // HereNode newHeroNode = new HereNode(2, "小盧", "~~");
+        // singleLinkedList.update(newHeroNode);
+        // singleLinkedList.list();
 
         //刪除一個節點
-        singleLinkedList.del(1);
-        singleLinkedList.del(1);
-        singleLinkedList.list();
-
-        System.out.println(getLength(singleLinkedList.getHead()));
-
-        HereNode res = findLastIndexNode(singleLinkedList.getHead(),1);
-        System.out.println(res);
+        // singleLinkedList.del(1);
+        // singleLinkedList.del(1);
+        // singleLinkedList.list();
+        //
+        // System.out.println(getLength(singleLinkedList.getHead()));
+        //
+        // HereNode res = findLastIndexNode(singleLinkedList.getHead(), 1);
+        // System.out.println(res);
 
 
     }
@@ -46,37 +48,61 @@ public class SingleLinkedListDemo {
      * 2. index 表示是倒數第index個節點
      * 3. 先把singleLinkedList 走訪一次 確認個數
      * 4. 得到size後，從鏈表的第一個開始走訪(size-index)
+     *
      * @param head
      * @return
      */
-    public static HereNode findLastIndexNode(HereNode head,int index) {
-        if (head.next == null){
+    public static HereNode findLastIndexNode(HereNode head, int index) {
+        if (head.next == null) {
             return null;
         }
         int size = getLength(head);
-        if(index <= 0 || index > size){
+        if (index <= 0 || index > size) {
             return null;
         }
         HereNode cur = head.next;
-        for (int i = 0 ; i < size-index ;i++){
+        for (int i = 0; i < size - index; i++) {
             cur = cur.next;
         }
         return cur;
     }
 
-    public static int getLength(HereNode head){
-        if(head.next == null){
+    public static int getLength(HereNode head) {
+        if (head.next == null) {
             return 0;
         }
         int length = 0;
         HereNode cur = head.next;
-        while (cur!=null){
+        while (cur != null) {
             length++;
             cur = cur.next;
         }
         return length;
     }
 
+
+    public static void reverse(HereNode head) {
+        if (head.next == null || head.next.next == null) {
+            return;
+        }
+        //定義一個輔助的指針，幫助我們走訪原來的鏈表
+        HereNode cur = head.next;
+        //指向cur的下一個節點
+        HereNode next = null;
+        HereNode reverseHead = new HereNode(0, "", "");
+        while (cur != null){
+            //先暫時保存cur的下一個節點，後面會用到
+            next = cur.next;
+            //將cur的的下一個節點指向新的鏈表的最前端
+            cur.next = reverseHead.next;
+            //將cur連接到新的鏈表上
+            reverseHead.next = cur;
+            //讓cur後移
+            cur = next;
+        }
+        //將head.next 指向 reverseHead.next 實現單鏈表的反轉
+        head.next = reverseHead.next;
+    }
 
 }
 
