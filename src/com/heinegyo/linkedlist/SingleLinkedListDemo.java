@@ -1,5 +1,7 @@
 package com.heinegyo.linkedlist;
 
+import java.util.Stack;
+
 public class SingleLinkedListDemo {
     public static void main(String[] args) {
         // System.out.println("hello");
@@ -24,6 +26,10 @@ public class SingleLinkedListDemo {
 
         reverse(singleLinkedList.getHead());
         singleLinkedList.list();
+
+        System.out.println("test reversePrint ");
+        reversePrint(singleLinkedList.getHead());
+
         //測試修改節點
         // HereNode newHeroNode = new HereNode(2, "小盧", "~~");
         // singleLinkedList.update(newHeroNode);
@@ -104,6 +110,25 @@ public class SingleLinkedListDemo {
         head.next = reverseHead.next;
     }
 
+    /**
+     * 從尾部print SingleLinkedList - 逆序print
+     * 1. 先將SingleLinkedList 進行反轉，然後在遍歷即可，但是會破壞原有結構
+     * 2. 使用stack，利用先進後出的特點
+     */
+    public static void reversePrint(HereNode head){
+        if(head.next == null){
+            return;
+        }
+        Stack<HereNode> stack = new Stack<>();
+        HereNode cur = head.next;
+        while (cur != null){
+            stack.push(cur);
+            cur = cur.next;
+        }
+        while (stack.size() > 0){
+            System.out.println(stack.pop());
+        }
+    }
 }
 
 //定義SingLinkedList 管理英雄角色
