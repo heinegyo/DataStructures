@@ -24,6 +24,7 @@ public class BinarySearch {
      * @return 如果找到就回傳索引，如果沒有找到就回傳-1
      */
     public static int binarySearch(int[] arr, int left, int right, int findVal) {
+        System.out.println("Binary Search 次數");
         //當left > right 時，說明遞迴整個陣列，但是沒有找到
         if (left > right) {
             return -1;
