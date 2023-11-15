@@ -10,18 +10,29 @@ public class BinaryTreeDemo {
         HeroNode node4 = new HeroNode(4, "Doctor Strange");
         HeroNode node5 = new HeroNode(5, "Ant-Man");
 
-        root.setLeft(node2);System.out.println();
+        root.setLeft(node2);
+        System.out.println();
         root.setRight(node3);
         node3.setRight(node4);
         node3.setLeft(node5);
 
         binaryTree.setRoot(root);
 
+        //System.out.println("preOrder traversal");
         //binaryTree.preOrder();
-        // System.out.println();
+        //System.out.println("infixOrder traversal");
         //binaryTree.infixOrder();
-        // System.out.println();
-        binaryTree.postOrder();
+        //System.out.println("postOrder traversal");
+        //binaryTree.postOrder();
+
+        System.out.println("preOrderSearch");
+        System.out.println(binaryTree.preOrderSearch(5));
+
+        System.out.println("infixOrderSearch");
+        System.out.println(binaryTree.infixOrderSearch(6));
+
+        System.out.println("postOrderSearch");
+        System.out.println(binaryTree.postOrderSearch(5));
     }
 
 
@@ -55,6 +66,30 @@ class BinaryTree {
             this.root.postOrder();
         } else {
             System.out.println("BinaryTree is empty");
+        }
+    }
+
+    public HeroNode preOrderSearch(int no) {
+        if (root != null) {
+            return root.preOrderSearch(no);
+        } else {
+            return null;
+        }
+    }
+
+    public HeroNode infixOrderSearch(int no) {
+        if (root != null) {
+            return root.infixOrderSearch(no);
+        } else {
+            return null;
+        }
+    }
+
+    public HeroNode postOrderSearch(int no) {
+        if (root != null) {
+            return root.postOrderSearch(no);
+        } else {
+            return null;
         }
     }
 }
@@ -141,5 +176,63 @@ class HeroNode {
             this.right.postOrder();
         }
         System.out.println(this);
+    }
+
+    public HeroNode preOrderSearch(int no) {
+        System.out.println("preOrderSearch...");
+        if (this.no == no) {
+            return this;
+        }
+        HeroNode resNode = null;
+        if (this.left != null) {
+            resNode = this.left.preOrderSearch(no);
+        }
+        if (resNode != null) {
+            return resNode;
+        }
+        if (this.right != null) {
+            resNode = this.right.preOrderSearch(no);
+        }
+        return resNode;
+    }
+
+    public HeroNode infixOrderSearch(int no) {
+        HeroNode resNode = null;
+        if (this.left != null) {
+            resNode = this.left.infixOrderSearch(no);
+        }
+        if (resNode != null) {
+            return resNode;
+        }
+        System.out.println("infixOrderSearch....");
+        if (this.no == no) {
+            return this;
+        }
+        if (this.right != null) {
+            resNode = this.right.infixOrderSearch(no);
+        }
+
+        return resNode;
+    }
+
+    public HeroNode postOrderSearch(int no) {
+        HeroNode resNode = null;
+        if (this.left != null) {
+            resNode = this.left.postOrderSearch(no);
+        }
+        if (resNode != null) {
+            return resNode;
+        }
+        if (this.right != null) {
+            resNode = this.right.postOrderSearch(no);
+        }
+        if (resNode != null) {
+            return resNode;
+        }
+        System.out.println("postOrderSearch.....");
+        if (this.no == no) {
+            return this;
+        }
+        return resNode;
     }
 }
