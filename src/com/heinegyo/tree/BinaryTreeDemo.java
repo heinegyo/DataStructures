@@ -25,14 +25,20 @@ public class BinaryTreeDemo {
         //System.out.println("postOrder traversal");
         //binaryTree.postOrder();
 
-        System.out.println("preOrderSearch");
-        System.out.println(binaryTree.preOrderSearch(5));
+        // System.out.println("preOrderSearch");
+        // System.out.println(binaryTree.preOrderSearch(5));
 
-        System.out.println("infixOrderSearch");
-        System.out.println(binaryTree.infixOrderSearch(6));
+        // System.out.println("infixOrderSearch");
+        // System.out.println(binaryTree.infixOrderSearch(6));
+        //
+        // System.out.println("postOrderSearch");
+        // System.out.println(binaryTree.postOrderSearch(6));
 
-        System.out.println("postOrderSearch");
-        System.out.println(binaryTree.postOrderSearch(5));
+        System.out.println("preOrder traversal");
+        binaryTree.preOrder();
+        binaryTree.delNode(5);
+        System.out.println("after delNode");
+        binaryTree.preOrder();
     }
 
 
@@ -43,6 +49,19 @@ class BinaryTree {
 
     public void setRoot(HeroNode root) {
         this.root = root;
+    }
+
+    public void delNode(int no){
+        if (root!=null){
+            if (root.getNo() == no){
+                root = null;
+            } else {
+                //遞迴刪除
+                root.delNode(no);
+            }
+        }else {
+            System.out.println("empty tree");
+        }
     }
 
     public void preOrder() {
@@ -140,6 +159,42 @@ class HeroNode {
     @Override
     public String toString() {
         return "HeroNode{" + "no=" + no + ", name='" + name + '\'' + '}';
+    }
+
+    /**
+     * 遞迴刪除節點
+     * 1. 如果刪除的節點是葉子節點，則刪除該節點
+     * 2. 如果刪除的節點是非葉子節點，則刪除該子樹
+     * @param no
+     */
+    public void delNode(int no) {
+        /**
+         * 1. 因為二元樹是單向的，所以判斷是否刪除節點時，應判斷子節點是否需要刪除
+         * 2. 如果目前的節點左子節點不為null,且左子節點為要刪除節點，則將this.left = null
+         *    並結束遞迴
+         * 3. 如果目前的節點右子節點不為null,且右子節點為要刪除節點，則將this.left = null
+         *    並結束遞迴
+         * 4. 如果step2、3沒有刪除節點，需要對左子樹遞迴，
+         * 5. step4.也未能刪除節點，則對右子樹遞迴
+         */
+        if (this.left != null && this.left.no == no) {
+            this.left = null;
+            return;
+        }
+
+        if (this.right != null && this.right.no == no) {
+            this.right = null;
+            return;
+        }
+
+        if (this.left != null){
+            this.left.delNode(no);
+        }
+
+        if (this.right != null){
+            this.right.delNode(no);
+        }
+
     }
 
     //前序遍歷
