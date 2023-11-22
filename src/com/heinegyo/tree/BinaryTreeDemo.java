@@ -34,11 +34,11 @@ public class BinaryTreeDemo {
         // System.out.println("postOrderSearch");
         // System.out.println(binaryTree.postOrderSearch(6));
 
-        System.out.println("preOrder traversal");
-        binaryTree.preOrder();
-        binaryTree.delNode(5);
-        System.out.println("after delNode");
-        binaryTree.preOrder();
+        // System.out.println("preOrder traversal");
+        // binaryTree.preOrder();
+        // binaryTree.delNode(5);
+        // System.out.println("after delNode");
+        // binaryTree.preOrder();
     }
 
 
