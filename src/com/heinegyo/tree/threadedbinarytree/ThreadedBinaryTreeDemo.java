@@ -25,6 +25,8 @@ public class ThreadedBinaryTreeDemo {
 
         System.out.println(node5.getLeft());
         System.out.println(node5.getRight());
+        System.out.println(".............");
+        threadedTree.threadedList();
     }
 }
 
@@ -40,7 +42,7 @@ class ThreadedTree {
         this.root = root;
     }
 
-    public void threadedNodes(){
+    public void threadedNodes() {
         this.threadedNodes(root);
     }
 
@@ -76,6 +78,27 @@ class ThreadedTree {
         //(三)再線索化 右子樹
         threadedNodes(node.getRight());
 
+    }
+
+    public void threadedList() {
+        HeroNode node = root;
+        while (node != null) {
+            //循環找到leftType == 1的節點，第一個找到就是8節點
+            //後面的隨著走訪而變化，因為當leftType==1時，說明該節點是按照線索化
+            //處理後的有效節點
+            while (node.getLeftType() == 0) {
+                node = node.getLeft();
+            }
+
+            System.out.println(node);
+            //如果目前的節點右指針指向的的是後繼節點，就一直輸出
+            while (node.getRightType() == 1){
+                node = node.getRight();
+                System.out.println(node);
+            }
+
+            node = node.getRight();
+        }
     }
 
     public void delNode(int no) {
